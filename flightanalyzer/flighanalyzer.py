@@ -24,7 +24,7 @@ class FileAnalyzer:
 
 
   def complete_full_data(self,flightdata):
-
+    #Completing full data
 
   def move_file(self,filepath,flightdata):
     newfilepath = os.path.join(self._dest_path, flightdata["IFPLID"])
