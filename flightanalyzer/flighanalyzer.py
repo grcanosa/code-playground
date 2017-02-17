@@ -12,8 +12,8 @@ class FileAnalyzer:
     self._analyzed_path = ""
     self._dest_path = ""
     #Parameters to look for in each file.
-    #We the last one (in the order that they appear in this vector)
-    #is found we stop searching that file.
+    #When the last one is found (in the order that they appear in this vector)
+    #we stop searching that file.
     self._flight_file_param = ["TIMESTAMP","EVENT","EVENTCLASS","IFPLID","REGUL"]
 
   def analyze_path(self,path,dest_path):
