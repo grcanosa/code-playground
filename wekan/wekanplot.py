@@ -130,7 +130,7 @@ def main(wekan_file):
 
 def parse_arguments(argv):
   parser = optparse.OptionParser();
-  parser.add_option("--f",help="Location of wekan file",default=None);
+  parser.add_option("-f","--f",help="Location of wekan file",default=None);
   options,args = parser.parse_args(argv);
   if options.f is None:
     print("Please provide wekan json file");
