@@ -71,8 +71,9 @@ def get_hours(wej):
   fin_h = 0;
   finListId = 0
   for l in wej["lists"]:
-    if l["title"] == "FIN":
+    if "DONE" in l["title"]:
       finListId = l["_id"];
+      break;
   for a in wej["cards"]:
     h = get_card_hours(a);
     total_h += h;
