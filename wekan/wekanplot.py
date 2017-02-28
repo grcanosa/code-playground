@@ -9,6 +9,7 @@ import numpy as np
 import optparse
 
 
+
 def extract_string(text,tag):
   textspli = text.split();
   for t in textspli:
@@ -139,6 +140,7 @@ def parse_arguments(argv):
     exit(1);
   return options.f;
 
+print(__name__)
 if __name__ == "__main__":
   wekan_file = parse_arguments(sys.argv);
   sys.exit(main(wekan_file))
