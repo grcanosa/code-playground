@@ -36,7 +36,7 @@ def str2date(datestr):
 def get_sprint_dates(wej):
   if "description" not in wej:
     print("Field description must be set for the board!!!!")
-    print("Assumming 2 hour sprint with current week as first");
+    print("Assumming 2 week sprint with current week as first");
     no = datetime.datetime.now().date();
     desc = "";
     desc += "START:"+(no-datetime.timedelta(days=no.weekday())).strftime("%Y%m%d");
@@ -60,12 +60,14 @@ def get_sprint_dates(wej):
   return dates;
 
 def get_card_hours(a):
+  horas = 0;
   if "HORAS:" in a["title"]:
-    return extract_number(a["title"],"HORAS");
+    horas = extract_number(a["title"],"HORAS");
   if "description" in a and "HORAS:" in a["description"]:
-    return extract_number(a["description"],"HORAS");
-  print("CARD "+a["title"]+" HAS NOT HOURS SET!!!")
-  return 0;
+    horas = extract_number(a["description"],"HORAS");
+  if horas == 0:
+    print("CARD "+a["title"]+" HAS NOT HOURS SET!!!")
+  return horas;
 
 def get_hours(wej):
   total_h = 0;
@@ -140,7 +142,7 @@ def parse_arguments(argv):
     exit(1);
   return options.f;
 
-print(__name__)
+
 if __name__ == "__main__":
   wekan_file = parse_arguments(sys.argv);
   sys.exit(main(wekan_file))
