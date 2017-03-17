@@ -32,13 +32,15 @@ def get_column_indexes(first_row):
             col_index["hours"] = index;
     return col_index;
 
-
-def get_hours_row(col_index,row):
+def fill_stats_from_row(col_index,row,stats):
+    #print(row[col_index["proyect"]])
     finished = False;
     blocked = False;
-    hours = row[col_index["hours"]];
+    hours = float(row[col_index["hours"]].replace(",","."));
     percentage = float(row[col_index["percentage"]].replace(",","."))
     state = row[col_index["state"]]
+    typeT = row[col_index["type"]]
+    proyect = row[col_index["proyect"]]
     if ( (state == "Pte Validacion" or state == "Corregida") and percentage == 100.0 ):
         #TASK IS FINISHED
         finished = True;
@@ -46,24 +48,39 @@ def get_hours_row(col_index,row):
         print("Task "+row[col_index["issue"]]+" has inconsistent State/Percentage, marking as not finished");
     elif state == "Bloqueada":
         blocked = True;
-    return finished,blocked,float(hours.replace(",","."))
+    stats["totalH"] += hours;
+    if finished:
+        stats["doneH"] += hours;
+    if blocked:
+        stats["blockedH"] += hours;
+    if proyect in stats["proyectsH"]:
+        stats["proyectsH"][proyect] += hours;
+    else:
+        stats["proyectsH"][proyect] = hours;
+    if state in stats["States"]:
+        stats["States"][state] += 1;
+    else:
+        stats["States"][state] = 1;
+    if typeT in stats["Types"]:
+        stats["Types"][typeT] += 1;
+    else:
+        stats["Types"][typeT] = 1;
 
 
-def get_total_and_done_hours(csv_file):
-    total_hours = 0;
-    done_hours = 0;
-    blocked_hours = 0
+def get_sprint_stats(csv_file):
+    stats={}
+    stats["totalH"] = 0
+    stats["doneH"] = 0
+    stats["blockedH"] = 0
+    stats["proyectsH"] = {}
+    stats["States"] = {}
+    stats["Types"] = {}
     with open(csv_file,newline='',encoding='latin-1') as f:
         reader=csv.reader(f,delimiter=";");
         col_index = get_column_indexes(reader.__next__())
         for row in reader:
-            finished, blocked,hours = get_hours_row(col_index,row);
-            total_hours += hours;
-            if finished:
-                done_hours += hours;
-            if blocked:
-                blocked_hours += hours;
-    return total_hours,done_hours,blocked_hours
+            fill_stats_from_row(col_index,row,stats);
+    return stats
 
 def str2date(datestr):
     #print(datestr,datestr[0:4],datestr[4:6],datestr[6:8])
@@ -123,22 +140,40 @@ def plot_values(dates,totalh,finh,blockedh,now,title="Sprint"):
     plt.ylabel("Hours");
     ax.set_ylim(0,max(pfinh)*1.1)
     plt.title(title+" (Total %dh)"%totalh)
-    plt.show()
+    fig.show()
     # plt.plot(ptotald,ptotalh,pfind,pfinh);
     # #plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%d'))
     # plt.gca().xaxis.set_major_locator(FixedLocator())
     # plt.show()
 
 
+def make_autopct(values):
+    def my_autopct(pct):
+        total = sum(values)
+        val = int(round(pct*total/100.0))
+        return '{v:d} ({p:.2f}%)'.format(p=pct,v=val)
+    return my_autopct
+
+def plot_sprint_pie(dictData,title):
+    fig,ax = plt.subplots()
+    labels = list(dictData.keys());
+    values = list(dictData.values());
+    plt.pie(values,labels=labels,autopct=make_autopct(values),startangle=90)
+    plt.title(title);
+    ax.axis("equal")
+    fig.show()
+
+
 def main(csv_file,startDate,endDate,holidayDates,title):
-    totalH,doneH,blockedH = get_total_and_done_hours(csv_file);
+    stats = get_sprint_stats(csv_file);
+    #print(stats)
     dates = get_sprint_dates(startDate,endDate,holidayDates);
-    plot_values(dates,totalH,doneH,blockedH,datetime.datetime.now(),title=title)
-
-
-
-
-
+    plot_values(dates,stats["totalH"],stats["doneH"],stats["blockedH"],datetime.datetime.now(),title=title)
+    #plot_sprint_proyects(stats["proyectsH"]);
+    plot_sprint_pie(stats["proyectsH"], "Hours by Proyect\n")
+    plot_sprint_pie(stats["States"], "Tasks by State\n")
+    plot_sprint_pie(stats["Types"], "Tasks by Type\n")
+    plt.show()
 
 
 def parse_arguments(argv):
