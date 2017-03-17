@@ -168,11 +168,12 @@ def main(csv_file,startDate,endDate,holidayDates,title):
     stats = get_sprint_stats(csv_file);
     #print(stats)
     dates = get_sprint_dates(startDate,endDate,holidayDates);
-    plot_values(dates,stats["totalH"],stats["doneH"],stats["blockedH"],datetime.datetime.now(),title=title)
+
     #plot_sprint_proyects(stats["proyectsH"]);
     plot_sprint_pie(stats["proyectsH"], "Hours by Proyect\n")
     plot_sprint_pie(stats["States"], "Tasks by State\n")
     plot_sprint_pie(stats["Types"], "Tasks by Type\n")
+    plot_values(dates,stats["totalH"],stats["doneH"],stats["blockedH"],datetime.datetime.now(),title=title)
     plt.show()
 
 
@@ -181,7 +182,7 @@ def parse_arguments(argv):
   parser.add_option("-f","--f",help="Location of csv file",default=None,dest = "filename");
   parser.add_option("-s","--start",help="Provide start date of this sprint, format: 20170315",default=None,dest="start")
   parser.add_option("-e","--end",help="Provide end date of this sprint,format: 20170315",default=None,dest="end")
-  parser.add_option("-n","--nowork",help="Provide holidays in this spring,format: 20170315 (multiple can be provided)",action="append",dest="holidays")
+  parser.add_option("-n","--nowork",help="Provide holidays in this spring,format: 20170315 (multiple can be provided)",action="append",dest="holidays",default=[])
   parser.add_option("-t","--title",help="Sprint title",default="Sprint",dest="title")
   options,args = parser.parse_args(argv);
   if options.filename is None:
