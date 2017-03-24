@@ -2,11 +2,22 @@
 import sys
 import optparse
 import csv
+import json
 import matplotlib.pyplot as plt
+from matplotlib import cm
 import matplotlib.dates as mdates
 from matplotlib.ticker import FixedLocator
 import numpy as np
 import datetime
+
+FINISHED_STATES = ["Pte Validacion","Corregida","Resuelta"]
+BLOCKED_STATES = ["Bloqueada"]
+SUPPORT_TYPES = ["Soporte"]
+
+class HoursInfo:
+    def __init__(self):
+        self.hours = {};
+        self.types = {};
 
 
 def get_column_indexes(first_row):
@@ -32,54 +43,51 @@ def get_column_indexes(first_row):
             col_index["hours"] = index;
     return col_index;
 
+def sumvalueindict(dictobj,key,value):
+    if key in dictobj:
+        dictobj[key] += value;
+    else:
+        dictobj[key] = value;
+
 def fill_stats_from_row(col_index,row,stats):
     #print(row[col_index["proyect"]])
-    finished = False;
-    blocked = False;
     hours = float(row[col_index["hours"]].replace(",","."));
     percentage = float(row[col_index["percentage"]].replace(",","."))
     state = row[col_index["state"]]
     typeT = row[col_index["type"]]
     proyect = row[col_index["proyect"]]
-    if ( (state == "Pte Validacion" or state == "Corregida") and percentage == 100.0 ):
+    if ( (state in FINISHED_STATES) and percentage == 100.0 ):
         #TASK IS FINISHED
         finished = True;
-    elif ( (state == "Pte Validacion" or state == "Corregida") or percentage == 100.0 ):
-        print("Task "+row[col_index["issue"]]+" has inconsistent State/Percentage, marking as not finished");
-    elif state == "Bloqueada":
-        blocked = True;
-    stats["totalH"] += hours;
-    if finished:
-        stats["doneH"] += hours;
-    if blocked:
-        stats["blockedH"] += hours;
-    if proyect in stats["proyectsH"]:
-        stats["proyectsH"][proyect] += hours;
-    else:
-        stats["proyectsH"][proyect] = hours;
-    if state in stats["States"]:
-        stats["States"][state] += 1;
-    else:
-        stats["States"][state] = 1;
-    if typeT in stats["Types"]:
-        stats["Types"][typeT] += 1;
-    else:
-        stats["Types"][typeT] = 1;
+    elif ( (state in FINISHED_STATES) or percentage == 100.0 ):
+        print("Task "+row[col_index["issue"]]+" has inconsistent State ("+state+") and percentage ("+str(percentage)+"), please fix it");
+    # stats["totalH"] += hours;
+    # if finished:
+    #     stats["doneH"] += hours;
+    # if blocked:
+    #     stats["blockedH"] += hours;
 
+    sumvalueindict(stats["ProyectsH"],proyect, hours);
+    sumvalueindict(stats["StatesH"],state, hours);
+    sumvalueindict(stats["TypesH"],typeT, hours);
 
 def get_sprint_stats(csv_file):
     stats={}
-    stats["totalH"] = 0
-    stats["doneH"] = 0
-    stats["blockedH"] = 0
-    stats["proyectsH"] = {}
-    stats["States"] = {}
-    stats["Types"] = {}
+    stats["ProyectsH"] = {}
+    stats["StatesH"] = {}
+    stats["TypesH"] = {}
     with open(csv_file,newline='',encoding='latin-1') as f:
         reader=csv.reader(f,delimiter=";");
         col_index = get_column_indexes(reader.__next__())
         for row in reader:
             fill_stats_from_row(col_index,row,stats);
+    stats["HOURS"] = {};
+    stats["HOURS"]["SPRINT"] = {}
+    stats["HOURS"]["SPRINT"]["Total"] = sum([m[1] for m in stats["TypesH"].items() if m[0] not in SUPPORT_TYPES])
+    stats["HOURS"]["SPRINT"]["Done"] = sum([m[1] for m in stats["StatesH"].items() if m[0] in FINISHED_STATES])
+    stats["HOURS"]["SPRINT"]["Blocked"] = sum([m[1] for m in stats["StatesH"].items() if m[0] in BLOCKED_STATES])
+
+    stats["HOURS"]["Support"] = sum([m[1] for m in stats["TypesH"].items() if m[0] in SUPPORT_TYPES])
     return stats
 
 def str2date(datestr):
@@ -104,6 +112,37 @@ def get_sprint_dates(startDate,endDate,holidayDates):
             dates.append(auxd);
         auxd = auxd + datetime.timedelta(days=1);
     return dates;
+
+def plot_bars(dates,totalh,finh,blockedh,now,title="Sprint"):
+    today_in = -1;
+    for d in dates:
+        today_in +=1;
+        if d == now.date():
+            break;
+    #print(today_in);
+    hinc = totalh/(len(dates));
+    ptotalh = [totalh - d*hinc for d in range(0,len(dates)+1)];
+    #print(len(dates),ptotalh)
+    hincfin = finh / today_in;
+    hincblock = blockedh / today_in;
+    #print(hinc,hincfin)
+    plefth = [totalh - d*hincfin for d in range(0,today_in+1)];
+    pfinh = [totalh-p for p in plefth];
+    pblocked = [d*hincblock for d in range(0,today_in+1)];
+    fig,ax = plt.subplots()
+    bar_width = 0.35
+    index = np.arange(len(pfinh))-bar_width/2;
+    ax.bar(index,plefth,width=bar_width,color="r");
+    ax.bar(index,pfinh,width=bar_width,color="b",bottom=plefth);
+    # index = np.arange(len(pfinh))
+    # ax.bar(index-bar_width/2,pfinh,width=bar_width,color="r");
+    # index = np.arange(len(ptotalh))
+    # ax.bar(index-bar_width/2,ptotalh,width=bar_width,color='b');
+    ax.plot(ptotalh,'k-',linewidth=2,label="Target (%dh to finish)"% int(ptotalh[today_in]))
+    ax.set_xticks(range(0,len(dates)+1))
+    #ax.set_xticklabels(["0"]+[d.strftime("%d %b") for d in dates])     # set the ticklabels to the list of datetimes
+    ax.set_xticklabels([d.strftime("%a %d") for d in dates]+["END"])     # set the ticklabels to the list of datetimes
+    plt.tight_layout()
 
 def plot_values(dates,totalh,finh,blockedh,now,title="Sprint"):
     today_in = -1;
@@ -132,7 +171,7 @@ def plot_values(dates,totalh,finh,blockedh,now,title="Sprint"):
     if(pfinh[today_in] > ptotalh[today_in]):
         plt.plot((today_in, today_in), (ptotalh[today_in], pfinh[today_in]), 'r-',linewidth=4,solid_capstyle="butt",label="Difference (%dh)" % round(pfinh[today_in]-ptotalh[today_in]));
         if blockedh > 0:
-            plt.plot((today_in, today_in), (ptotalh[today_in], ptotalh[today_in]+blockedh), 'y-',linewidth=6,solid_capstyle="butt",label="Blocked (%dh)" % round(blockedh));
+            plt.plot((today_in, today_in), (pfinh[today_in]-blockedh, pfinh[today_in]), 'y-',linewidth=6,solid_capstyle="butt",label="Blocked (%dh)" % round(blockedh));
     else:
         plt.plot((today_in, today_in), (pfinh[today_in], ptotalh[today_in]), 'g-',linewidth=4,solid_capstyle="butt",label="We are awesome!!");
     ax.legend(loc=1, fontsize=10) # make a legend and place in bottom-right (loc=4)
@@ -147,33 +186,46 @@ def plot_values(dates,totalh,finh,blockedh,now,title="Sprint"):
     # plt.show()
 
 
-def make_autopct(values):
-    def my_autopct(pct):
-        total = sum(values)
-        val = int(round(pct*total/100.0))
-        return '{v:d} ({p:.2f}%)'.format(p=pct,v=val)
-    return my_autopct
+# def make_autopct(values):
+#     def my_autopct(pct):
+#         total = sum(values)
+#         val = int(round(pct*total/100.0))
+#         return '{v:d} ({p:.2f}%)'.format(p=pct,v=val)
+#     return my_autopct
 
-def plot_sprint_pie(dictData,title):
-    fig,ax = plt.subplots()
-    labels = list(dictData.keys());
-    values = list(dictData.values());
-    plt.pie(values,labels=labels,autopct=make_autopct(values),startangle=90)
-    plt.title(title);
-    ax.axis("equal")
+def plot_sprint_pie(dictData,titlep):
+    fig,ax = plt.subplots(2,1)
+    cs = cm.Set1(np.arange(len(dictData))/len(dictData))
+    data = sorted(dictData.items(), key=lambda x: x[1],reverse = True)
+    labels = [x[0] for x in data];
+    values = [x[1] for x in data];
+    total = sum(values);
+    cells = []
+    for i,l in enumerate(labels):
+        cells.append([str(values[i])+" h",str(round(values[i]/total*100.0))+" %"])
+    ret = ax[0].pie(values,startangle=90,colors=cs)
+    #ax[0].title(titlep);
+    #legend = ax[0].legend(newlabels,bbox_to_anchor=(2.2, 0.5), loc=5, borderaxespad=0.)
+    ax[0].axis("equal")
+    ax[0].axis(aspect=2)
+    ax[1].axis("off")
+    rowlabels = labels;
+    ax[1].table(cellText=cells,bbox=[0.25, 0, 0.75, 1], cellLoc='center',rowLabels=rowlabels,rowColours=cs,colWidths=[.2]*2)
     fig.show()
 
 
 def main(csv_file,startDate,endDate,holidayDates,title):
+    #plt.rcParams['axes.color_cycle'].remove('k')
     stats = get_sprint_stats(csv_file);
+    print(json.dumps(stats,indent=4))
     #print(stats)
     dates = get_sprint_dates(startDate,endDate,holidayDates);
 
-    #plot_sprint_proyects(stats["proyectsH"]);
-    plot_sprint_pie(stats["proyectsH"], "Hours by Proyect\n")
-    plot_sprint_pie(stats["States"], "Tasks by State\n")
-    plot_sprint_pie(stats["Types"], "Tasks by Type\n")
-    plot_values(dates,stats["totalH"],stats["doneH"],stats["blockedH"],datetime.datetime.now(),title=title)
+    plot_sprint_pie(stats["ProyectsH"], "Hours by Proyect\n")
+    plot_sprint_pie(stats["StatesH"], "Hours by Task State\n")
+    plot_sprint_pie(stats["TypesH"], "Hours by Task Type\n")
+    plot_values(dates,stats["HOURS"]["SPRINT"]["Total"],stats["HOURS"]["SPRINT"]["Done"],stats["HOURS"]["SPRINT"]["Blocked"],datetime.datetime.now(),title=title)
+    plot_bars(dates,stats["HOURS"]["SPRINT"]["Total"],stats["HOURS"]["SPRINT"]["Done"],stats["HOURS"]["SPRINT"]["Blocked"],datetime.datetime.now(),title=title)
     plt.show()
 
 
