@@ -4,9 +4,10 @@
 class HorasInfo:
     def __init__(self):
         self.total = 0;
-        self.done = 0;
+        self.doneFinished = 0;
+        self.doneReal = 0;
         self.blockedTotal = 0;
-        self.blocked = 0;
+        self.blockedReal = 0;
         self.statesH = {}
         self.proyectsH = {}
 

@@ -43,10 +43,11 @@ def fill_hoursinfo_with_data(isue,hours,percentage,state,proyect,hoursinfo):
         print("Task "+str(issue)+" inconsistent state ("+state+") and percentage ("+str(percentage)+"), fix it");
     hoursinfo.total += hours;
     if state in FINISHED_STATES:
-        hoursinfo.done += hours;
+        hoursinfo.doneFinished += hours;
     elif state in BLOCKED_STATES:
         hoursinfo.blockedTotal += hours;
-        hoursinfo.blocked += hours*percentage;
+        hoursinfo.blockedReal += hours*(1-(percentage/100));
+    hoursinfo.doneReal += hours * percentage / 100;
     sumvalueindict(hoursinfo.proyectsH, proyect, hours)
     sumvalueindict(hoursinfo.statesH, state, hours)
 

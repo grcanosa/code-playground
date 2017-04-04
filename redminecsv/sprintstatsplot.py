@@ -65,21 +65,24 @@ def plot_burndown(sprintST,dates,endDay,printAll=True):
         total_val_support = down_linear_regression(sprintST.horasSprint.total+sprintST.horasSupport.total, sprintST.horasSupport.total, len(dates)+1)
         ax.plot(total_val_support,'r-',label="Target with support (%dh to finish)"% int(total_val_support[today_in]))
 
-    not_done_h = sprintST.horasSprint.total-sprintST.horasSprint.done
+    not_done_h = sprintST.horasSprint.total-sprintST.horasSprint.doneFinished
     not_done_val = down_linear_regression(sprintST.horasSprint.total, not_done_h , today_in+1)
-    ax.plot(not_done_val,'b-',label="Current (%dh to finish)"% int(not_done_val[today_in]))
+    ax.plot(not_done_val,'b-',label="Finished (%dh to finish)"% int(not_done_val[today_in]))
+    not_done_real_h = sprintST.horasSprint.total - sprintST.horasSprint.doneReal;
+    not_done_real_val = down_linear_regression(sprintST.horasSprint.total, not_done_real_h , today_in+1)
+    ax.plot(not_done_real_val,'y--',label="Done (%dh to finish)"% int(not_done_real_val[today_in]))
     if sprintST.horasSupport.total > 0:
         if printAll:
-            not_done_sup_h = not_done_h + sprintST.horasSupport.total - sprintST.horasSupport.done
+            not_done_sup_h = not_done_h + sprintST.horasSupport.total - sprintST.horasSupport.doneFinished
             not_done_sup_val = down_linear_regression(sprintST.horasSprint.total+sprintST.horasSupport.total, not_done_sup_h , today_in+1)
             ax.plot(not_done_sup_val,'g-',label="Current with support (%dh to finish)"% int(not_done_sup_val[today_in]))
-        not_done_without_support_h = sprintST.horasSprint.total-sprintST.horasSprint.done-sprintST.horasSupport.total
+        not_done_without_support_h = sprintST.horasSprint.total-sprintST.horasSprint.doneFinished-sprintST.horasSupport.total
         not_done_without_support_val = down_linear_regression(sprintST.horasSprint.total, not_done_without_support_h , today_in+1)
-        ax.plot(not_done_without_support_val,'b--',label="Current (prediction if no support) (%dh to finish)"% int(not_done_without_support_val[today_in]))
+        ax.plot(not_done_without_support_val,'b--',label="Finished (prediction if no support) (%dh to finish)"% int(not_done_without_support_val[today_in]))
 
-    total_hours_done = sprintST.horasSprint.done + sprintST.horasSupport.done;
+    total_hours_done = sprintST.horasSprint.doneFinished + sprintST.horasSupport.doneFinished;
     ax.plot(today_in,total_hours_done,'w',label="Hours done (sprint + support) %dh"%int(total_hours_done))
-    hours_blocked = sprintST.horasSprint.blocked + sprintST.horasSupport.blocked;
+    hours_blocked = sprintST.horasSprint.blockedReal + sprintST.horasSupport.blockedReal;
     total_hours_blocked = sprintST.horasSprint.blockedTotal + sprintST.horasSupport.blockedTotal;
     ax.plot(today_in,total_hours_done,'w',label="Hours blocked %dh"%int(total_hours_blocked))
     #FORMATTINGS
@@ -115,16 +118,18 @@ def plot_pie(horas,labels, ax1,ax2,title):
 def plot_pies(sprintST):
     fig, ((ax11,ax12),(ax21,ax22)) = plt.subplots(2,2);
     horas = sprintST.horasSprint
-    hours = [horas.done];
-    hours.append(horas.total-horas.done-horas.blockedTotal);
-    hours.append(horas.blockedTotal);
-    labels = ["Done","In progress","Blocked"]
-    plot_pie(hours,labels, ax11, ax21,"Sprint Hours")
-    horas = sprintST.horasSprint
-    hours = [horas.done+sprintST.horasSupport.done];
-    hours.append(horas.total-horas.done-horas.blockedTotal);
-    hours.append(horas.blockedTotal);
-    plot_pie(hours,labels, ax12, ax22,"Sprint and Support Hours")
+    hours = [horas.doneFinished];
+    hours.append(horas.doneReal-horas.doneFinished);
+    hours.append(horas.blockedReal);
+    hours.append(horas.total-horas.doneReal-horas.blockedReal)
+
+    labels = ["Finished","In progress","Blocked","Waiting"]
+    plot_pie(hours,labels, ax11, ax21,"Sprint Hours \n (calculated with percentages)")
+    # horas = sprintST.horasSprint
+    # hours = [horas.doneFinished+sprintST.horasSupport.doneFinished];
+    # hours.append(horas.total-horas.doneFinished-horas.blockedTotal);
+    # hours.append(horas.blockedTotal);
+    # plot_pie(hours,labels, ax12, ax22,"Sprint and Support Hours")
 
 def plot_stats(sprintST,endDay):
     dates = calcDates(sprintST);
