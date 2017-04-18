@@ -1,0 +1,694 @@
+#;Estado;Proyecto;Tipo;Prioridad;Tema;Asignado a;Categoría;Versión prevista;Autor;Fecha de inicio;Fecha fin;% Realizado;Tiempo estimado;Creado;Actualizado;Tareas asociadas;Definition of Done;Descripción
+13406;Resuelta;MNR;Soporte;Normal;URLs Moxa y SFV110;Oscar Herranz;"";SprintSoporte_17_11;Oscar Herranz;2017-03-24;2017-03-24;100;4,0;Viernes, 24 de Marzo de 2017 11:07:15 +0100;Viernes, 24 de Marzo de 2017 11:07:15 +0100;"";"";"Se proporciona soporte para obtener las URLs de conexión de ambas cámaras que permiten la modificación desde sus respectivas interfaces web.
+"
+13405;Resuelta;MNR;Soporte;Normal;Generar tags SVV5GA_3C y CVVMNR_2D.;Jose Fernandez;"";SprintSoporte_17_11;Jose Fernandez;2017-03-23;2017-03-23;100;4,0;Viernes, 24 de Marzo de 2017 09:29:08 +0100;Viernes, 24 de Marzo de 2017 09:30:45 +0100;"";"";"- Generar la versión oficial SVV5GA_3C a partir de la última versión en pruebas.
+
+- Respecto a la configuración hay que sacar la versión CVVMNR_2D, con un cambio
+  respecto a la versión 2C: La calidad de las cámaras PACs e IFCs (VIDEOPROFILE2 y VIDEOPROFIEL3)
+  ha de cambiar del 60% al 70%.
+"
+13394;Resuelta;MNR;Soporte;Normal;Video download error in M7B;Luis Sanchez;"";SprintSoporte_17_11;Luis Sanchez;2017-03-23;"";100;12,0;Jueves, 23 de Marzo de 2017 15:16:17 +0100;Jueves, 23 de Marzo de 2017 15:44:53 +0100;"";"";"El equipo 4193 M7B da errores en la descarga de videos desde el VMT.
+Analizar logs y estudiar el problema
+
+ "
+13393;Resuelta;CINCINNATI CCTV;Soporte;Normal;Investigaciones diversas;Oscar Herranz;"";SprintSoporte_17_11;Oscar Herranz;2017-03-21;2017-03-22;100;16,0;Jueves, 23 de Marzo de 2017 14:30:48 +0100;Jueves, 23 de Marzo de 2017 15:15:42 +0100;"";"";"Se han realizado las siguientes investigaciones:
+* Comprobaciones en página web de borrado de vídeos, gestión de usuarios, configuración del anillo temporal de vídeos.
+* Revisión unidades extraídas de HDDs del tren.
+* Generación de configuraciones de cámaras a diferente bitrate así como tags de configuración para resolver anomalías en la web del grabador."
+13392;Resuelta;MNR;Soporte;Normal;Investigación cámaras Moxa y SFV110;Oscar Herranz;"";SprintSoporte_17_11;Oscar Herranz;2017-03-08;2017-03-10;100;16,0;Jueves, 23 de Marzo de 2017 14:22:54 +0100;Jueves, 23 de Marzo de 2017 15:16:28 +0100;"";"";"Edición de mini tutoriales para la instalación de cámaras MOXA y SFV110 como cámaras interiores de cabina. 
+La investigación se ha centrado en cómo estas cámaras se comportan bajo condiciones de poca luminosidad y su posterior configuración para ser compatibles con el grabador."
+13391;Resuelta;R68Qualification;Soporte;Normal;Puesta en marcha del equipo;Oscar Herranz;"";SprintSoporte_17_11;Oscar Herranz;2017-03-15;2017-03-17;100;24,0;Jueves, 23 de Marzo de 2017 14:16:08 +0100;Jueves, 23 de Marzo de 2017 15:30:11 +0100;"";"";"Soporte a Enrique Caballero para realizar la puesta en marcha del equipo final.
+Se dispuso del equipo que se ha enviado al tren tres días antes del envío del mismo a NY y se encontraba totalmente desactualizado (grabador, fpga, 8051, cámaras, BIOS).
+"
+13388;Pte Validacion;PRODUCTO;Spike;Normal;Análisis Open CV;Gonzalo Rodriguez;"";SprintPROD_17_11;Gonzalo Rodriguez;2017-03-23;"";100;16,0;Jueves, 23 de Marzo de 2017 11:02:17 +0100;Jueves, 23 de Marzo de 2017 12:28:13 +0100;"";* Write conclusions;"As: Team
+TO: Analyze the capabilities of opencv 
+
+NOTES:
+
+* install opencv
+* Analyse artificial vision capabilities
+* Analyse recorder capabilities. "
+13290;Pte Validacion;MetroArgel CCTV;User Story;Normal;[A+R] Crear árbol de proyecto.;Gonzalo Rodriguez;"";SprintMARG_17_11;Gonzalo Rodriguez;"";"";100;16,0;Viernes, 03 de Marzo de 2017 08:08:02 +0100;Viernes, 17 de Marzo de 2017 13:09:42 +0100;"";"* Update story
+* svn commit.
+* Tag component.
+* Update build.conf with new IP.
+* Update story with IP version.
+* Update board changelog file
+* Send IP CMPSW release e-mail";"Como: Equipo quiero ...
+Para: Disponer de un entorno de trabajo para realizar el proyecto.
+
+NOTAS:
+1) El repositorio y la carpeta inicial deben ser creadas por grupo de plataforma, pues no tenemos permisos para hacerlo nosotros.
+2) Realizar un svn co del repositorio inicial.
+3) Añadir externals del área make en la raíz del proyecto.
+4) Añadir la carpeta en la raíz del proyecto ""src"" para los componenetes interboars ""IB""
+5) Añadir el componente IB XXconfig donde estará la configuración de la librería libid -> libid.conf. OJO XX será algo significativo, por ejemplo ""tolconfig"", ""guaconfig"", etc.
+6) Añadir en boards la carpeta con la tarjeta del proyecto.
+7) Añadir build.conf -> añaidr APP_2_ROOTFS=(
+    mv:$DEST_ROOTFS_APP_DIR/bin/XXconfig.ini:$DEST_ROOTFS_CONFIG_DIR/libid.conf
+)
+8) Añadir en build.conf los módulos a compilar .... se puede copiar desde un proyecto similar para tener una ayuda inicial.
+9) Añadir en build.conf los nombres de las imágenes descritas en el documento L-T del proyecto.
+10) Crear el external de rootfs y kernel en caso necesario (sólo en aplicación)
+11)Añadir en boards/tarjeta el board.mak, changelog.info y el setenv.sh
+12) Añadir en boards/tarjeta la carpeta ""src"" para componentes locales.
+13) Añadir en boards/tarjeta la carpeta ""etc"" para componentes configuración.
+14) Crear algún fichero de configuración.
+15) Recordar hacer el ""svn add"" y ""svn commit"" de todo lo realizado.
+
+NOTA 2: Deberá hacerse lo anterior tanto para la configuración como para la aplicación en caso de ser necesaria.
+
+"
+13280;Pte Validacion;CINCINNATI CCTV;Spike;Normal;Ver limite CPU;Oscar Herranz;"";SprintCINCI_17_11;Enrique Camino Bruquetas;2017-03-14;2017-03-17;100;24,0;Martes, 14 de Marzo de 2017 13:23:34 +0100;Viernes, 17 de Marzo de 2017 11:22:07 +0100;"";"";"Como: Equipo quiero ...
+Para: Proponer un Bit Rate adecuado a las cámaras a grabar.
+
+NOTA: En el proyecto se están grabando 12 cámaras con un bit rate fijo a 2Mbit/seg y es un hecho empírico probado en el tren que la CPU no puede con tal volumen de datos.
+En un primer estudio se ve que los vídeos tardan más de 1 minuto en consolidarse y es produce multiples errores como que sólo hay un vídeo de cada dos con datos validos y que estos vídeos tienen un tamaño muy grande, superior a lo que deberían debido a los bufferes de recepción que estaban muy llenos.
+
+NOTA 2: Hay que crea un entorno con cámaras simuladas a 2Mbit/seg y comprobar que ocurre lo que suponemos.
+NOTA 3: Habría que mirar en el minircorder si hay algun msleep indebido.
+NOTA 4: Bajar el bit rate hasta ver que la consolidación se realiza adecuadamente.
+NOTA 5: Quizás el repositorio con consolidación secuencial sea necesario.
+
+"
+13278;Corregida;MNR;Bug;Normal;Switch interno inactivo;Luis Sanchez;"";SprintMNR_17_11;Enrique Camino Bruquetas;2017-03-14;"";100;16,0;Martes, 14 de Marzo de 2017 12:54:30 +0100;Jueves, 23 de Marzo de 2017 16:27:17 +0100;"";"- Ver por separado en el log el error de CRC y de switch inactivo.
+- Confirmar que el efecto en H.I es nulo cuando no tenemos lectura correcta.";"Como: Equipo veo en logs ...
+Para: 
+
+NOTA: Se ve en los log que se marca fallo de switch interno error ""switch inactivo"" cuando no parece probable pues el sistema está grabando.
+NOTA 2:Este diagnostico se realiza cada minuto, Y para que de el resultado sea ""Inactive"" tiene que producirse una de las siguientes situaciones:
+1) Haberse caído el enlace gigabit con el switch.
+2) Producirse un error de CRC en la lectura del 8051 a traces del I2C -> tres reintentos disponibles.
+3) Que la lectura del 8051 contra el swich sea errónea. Aquí no hay protección de CRC ni ningún reintento.
+NOTA 3: Por lo anteriormente descrito creemos que el problema es el punto 2 y que se están produciendo lecturas erróneas detectadas por el CRC.
+NOTA 4: Por lo menos se pueden separar y logar las dos primeras situaciones de forma independiente.
+NOTA 5: El que se haya caído el enlace gigabit momentáneamente, no parece probable, ya que esto vendría acompañado de errores en los diagnósticos de comunicación con las cámaras. Además se ve en otras comunicaciones i2c contra las FPGAs que se puede dar en ocasiones errores en la transacciones i2c con la diferencia de que en el caso del 8051 no queda logado.
+NOTA 6: Si el error es en la lectura mantener la última información disponible y logar diagnósitico no disponible.
+
+
+
+"
+13140;Corregida;Toluca CCTV;Bug;Normal;No error de cámaras si disco está en extración;Gonzalo Rodriguez;"";SprintTOL_17_11;Enrique Camino Bruquetas;2017-03-07;"";100;16,0;Martes, 07 de Marzo de 2017 15:24:44 +0100;Miércoles, 15 de Marzo de 2017 14:13:34 +0100;"";"* Escribir conclusiones.
+* Update story
+* svn commit.
+* Tag component.
+* Update build.conf with new IP.
+* Update story with IP version.
+* Update board changelog file
+* Send IP CMPSW release e-mail";"Como: usuario veo que ...
+Para:
+
+NOTA: Las cámaras aparecen en verde, aunque no estén disponibles en el sistema, si el disco está en extracción.
+
+"
+13139;Bloqueada;MetroArgel CCTV;User Story;Normal;[R] Asignar IPs por puerto de Switch;Oscar Herranz;"";SprintMARG_17_11;Enrique Camino Bruquetas;2017-03-22;2017-03-23;50;32,0;Lunes, 06 de Marzo de 2017 18:06:29 +0100;Viernes, 24 de Marzo de 2017 13:47:59 +0100;"";"* Update story
+* svn commit.
+* Tag component.
+* Update build.conf with new IP.
+* Update story with IP version.
+* Update board changelog file
+* Send IP CMPSW release e-mail";"Como: Usuario quiero .... 
+Para: Que todas las tarjetas se encuentren direccionadas en la red tanto por nombre DNS como por número.
+
+NOTAS: El número de ficheros a actualizar es bastante amplio.
+
+- swe.SERIE.conf -> Configuración del swich.
+- net.SERIE.conf -> Configuración de las IPs de los puertos.
+- Directorio Bind -> Configuración de los nombres.
+- dhcpss.conf -> configuración del componente dhcpss que asignará IPs según el puerto de conexión en el switch.
+- lanzar en last el dhcpss para asignar IPs sepsianas.
+- lanzar en last el named para tener resolución de nombres.
+
+NOTA 2: Ver imagen PuertosRtrfit.png adjunto."
+13138;Bloqueada;MetroArgel CCTV;User Story;Normal;[A+R] Identificación por defecto en el sistema;Gonzalo Rodriguez;"";SprintMARG_17_11;Gonzalo Rodriguez;2017-03-03;"";90;8,0;Viernes, 03 de Marzo de 2017 10:54:14 +0100;Miércoles, 15 de Marzo de 2017 16:10:25 +0100;"";"* Update story
+* svn commit.
+* Tag component.
+* Update build.conf with new IP.
+* Update story with IP version.
+* Update board changelog file
+* Send IP CMPSW release e-mail";"Como: Usuario 
+Quiero: Que el sistema tenga una identificación por defecto en caso de que todos los mecanismos de identificación estandar fallen.
+
+*NOTAS*
+* El sistema se identifica usando libdnsmapper que recurre a estos mecanismos:
+** Identificación basada en libid
+** Identificación basa en DIV (archivo /tmp/divID.conf)
+** Identificación basada en archivo por defecto /app/etc/divID.default.conf.
+
+* la tarea consiste en rellenar el /app/etc/divID.default.conf con los valores por defecto
+"
+13137;Bloqueada;MetroArgel CCTV;User Story;Normal;[A] Conseguir  IP en el sistema;Luis Sanchez;"";SprintMARG_17_11;Gonzalo Rodriguez;2017-03-03;"";90;8,0;Viernes, 03 de Marzo de 2017 10:22:49 +0100;Martes, 21 de Marzo de 2017 13:06:50 +0100;"";"* Update story
+* svn commit.
+* Tag component.
+* Update build.conf with new IP.
+* Update story with IP version.
+* Update board changelog file
+* Send IP CMPSW release e-mail";"Como: Usuario quiero ....
+Quiero: Que el equipo reciba una IP o se asigne una por defecto durante el arranque del equipo.
+
+*NOTAS*
+
+- El equipo pedirá IP por dhcp y en caso de no conseguir la IP se asignará una por defecto.
+- Dependiendo del proyecto la ip por defecto deberá ser la última que se le asigno por dhcp. El netwatcher ya dispone de esta funcionalidad.
+- Esta IP debe ser del rango correcto."
+13136;Bloqueada;MetroArgel CCTV;User Story;Normal;[A+R] Dar IPs en el PIU.;Oscar Herranz;"";SprintMARG_17_11;Gonzalo Rodriguez;2017-03-24;2017-03-24;80;4,0;Viernes, 03 de Marzo de 2017 10:03:41 +0100;Viernes, 24 de Marzo de 2017 13:44:22 +0100;"";"* Update story
+* svn commit.
+* Tag component.
+* Update build.conf with new IP.
+* Update story with IP version.
+* Update board changelog file
+* Send IP CMPSW release e-mail";"Como: Usuario quiero ...
+Para: Que el sistema proporcione IPs correctas por las interfaces de mantenimiento (Portable Interfaz Unit).
+
+*NOTAS*
+* Se deberá añadir un fichero udhcp_*.conf por interfaz de mantenimiento a la configuración. Ojo el conector trasero podría tratarse como un conector de mantenimiento en el caso de un DMRI.
+* Se deberá lanzar un servidor udhcp por cada interfaz para proporcionar las IPs correctas."
+13135;Bloqueada;MetroArgel CCTV;User Story;Normal;[A+R] Tener un apagado ordenado del equipo;Jose Fernandez;"";SprintMARG_17_11;Gonzalo Rodriguez;2017-03-21;"";60;8,0;Viernes, 03 de Marzo de 2017 09:59:58 +0100;Miércoles, 22 de Marzo de 2017 09:56:20 +0100;"";"* Update story
+* svn commit.
+* Tag component.
+* Update build.conf with new IP.
+* Update story with IP version.
+* Update board changelog file
+* Send IP CMPSW release e-mail";"Como: Usuario 
+Quiero: Que el equipo se apague/reinicie ordenadamente cuando se lo comanden
+
+NOTAS 1:
+- Se deberá reaccionar ante peticiones de apagado por:
+- switchoff (Alimentación off)
+- SIV (smee_updater)
+- Página web
+
+NOTA 2: Se puede probar en ausencia de SIV con el ""tstsvvupdater""
+"
+13134;Bloqueada;MetroArgel CCTV;User Story;Normal;[A+R] Configurar el DIV (Dispositivo Indentificación Vehículo);Didier Convenant;"";SprintMARG_17_11;Gonzalo Rodriguez;2017-03-03;"";50;16,0;Viernes, 03 de Marzo de 2017 09:21:44 +0100;Viernes, 24 de Marzo de 2017 10:51:50 +0100;"";"* Update story
+* svn commit.
+* Tag component.
+* Update build.conf with new IP.
+* Update story with IP version.
+* Update board changelog file
+* Send IP CMPSW release e-mail";"Como: Usuario quiero ....
+Para: Que el equipo se mantenga configurado entre distintos reinicios. 
+
+NOTAS:
+
+- La configuración deberá guardarse en un dispositivo de memoria no volátil, típicamente una memoria e2prom por i2c. Pero puede ser una partición de alguna memoria interna del sistema, disco duro, memoria de log .. de sistema.
+- Añadir libdiv2.conf IP y configurar el libdiv.conf con los dispositivos DIV disponibles según las especificaciones del proyecto.
+- Añadir el LO DIVContent y modificar el divcontent.conf en caso de ser necesario. "
+13133;Bloqueada;MetroArgel CCTV;User Story;Normal;[A+R] Poder consultar el listado de las grabaciones;Didier Convenant;"";SprintMARG_17_11;Gonzalo Rodriguez;2017-03-03;"";10;8,0;Viernes, 03 de Marzo de 2017 08:55:28 +0100;Martes, 21 de Marzo de 2017 10:59:00 +0100;"";"* Update story
+* svn commit.
+* Tag component.
+* Update build.conf with new IP.
+* Update story with IP version.
+* Update board changelog file
+* Send IP CMPSW release e-mail";"Como: Usuario 
+Quiero: Un mecanismo para poder consultar las grabaciones que hay ahora mismo en el equipo.
+
+*NOTAS*
+* Añadir libPathFinderMPath al sistema para poder consultar las en forma de consulta directa (FECHA->HORA->CAMARA->MINUTOS)
+* Estudiar la posibilidad de sustituir libPathFinderMPath por libPathFinder2 uqe puede combinar BBDD y consultas directas en caso necesario.
+** Esto implicaría hablar con la gente de PC para que cambien su API de consultas al servidor.
+** Las respuestas SI tienen el mismo formato.
+"
+13132;En progreso;MetroArgel CCTV;User Story;Normal;Informar del estado del equipo visualmente.;Didier Convenant;"";SprintMARG_17_11;Gonzalo Rodriguez;2017-03-03;"";0;16,0;Viernes, 03 de Marzo de 2017 08:29:58 +0100;Viernes, 24 de Marzo de 2017 12:43:36 +0100;"";"* Update story
+* svn commit.
+* Tag component.
+* Update build.conf with new IP.
+* Update story with IP version.
+* Update board changelog file
+* Send IP CMPSW release e-mail";"Como: Usuario quiero ...
+Para: Conocer de un vistazo el estado general del sistema.
+
+*NOTAS*
+* Añadir el componente LO DiagnoseResults2DOutputs al build.conf y last.conf
+* Modificarlo para que se controlen los LEDS del sistema en función de las especificaciones del proyecto."
+13129;Bloqueada;MetroArgel CCTV;User Story;Normal;[A+R] Tener batería de autotests.;Gonzalo Rodriguez;"";SprintMARG_17_11;Gonzalo Rodriguez;2017-03-03;"";90;16,0;Viernes, 03 de Marzo de 2017 08:10:44 +0100;Jueves, 16 de Marzo de 2017 10:15:36 +0100;"";"* Update story
+* svn commit.
+* Tag component.
+* Update build.conf with new IP.
+* Update story with IP version.
+* Update board changelog file
+* Send IP CMPSW release e-mail";"Como: Usuario que ...
+Para: Que el equipo evalúe sus sistemas de forma autónoma.
+
+*NOTAS*
+- Existirán dos conceptos en los test. CST (continuos selft test) para evaluación continua y POST (power on self test) para el arranque.
+- Añadir diagnose2 al last.conf
+- Editar diagnose.conf para añadir solo los dianósticos necesarios
+- Añadir al board.mak las directivas de compilación de los diagnósticos necesarios."
+13128;Bloqueada;MetroArgel CCTV;User Story;Normal;[A+R] Tener un registro de log.;Gonzalo Rodriguez;"";SprintMARG_17_11;Gonzalo Rodriguez;2017-02-23;"";90;4,0;Jueves, 23 de Febrero de 2017 14:30:49 +0100;Jueves, 16 de Marzo de 2017 08:54:56 +0100;"";"* update story.
+* svn commit.
+* tag component.
+* update build.conf with new IP.
+* update story with IP version.
+* update board changelog file.
+* send IP CMPSW release e-mail.";"Como: Usuario quiero ...
+Para: Logar en los discos deseados. 
+
+NOTAS: Modificar syslog.conf y logrotate.conf para logar en los discos adecuados.
+NOTA 2: En caso disponer de distintas configuraciones de discos se deberá utilizar el script ""generate_logconfig.py""
+NOTA 3: No olvidar el log del cliente tanto en la configuración del syslog como en los textos en logclient.conf"
+13126;Bloqueada;MetroArgel CCTV;User Story;Normal;[A+R] Formatear HDs;Gonzalo Rodriguez;"";SprintMARG_17_11;Enrique Camino Bruquetas;2017-02-22;2017-02-22;90;8,0;Miércoles, 22 de Febrero de 2017 11:09:55 +0100;Jueves, 16 de Marzo de 2017 10:06:17 +0100;"";"* update story.
+* svn commit.
+* tag component.
+* update build.conf with new IP.
+* update story with IP version.
+* update board changelog file.
+* send IP CMPSW release e-mail.";"Como: Usuario quiero ....
+Para: Tener un disco útil en el sistema.
+
+NOTA: El formateo se realizará a través de un runlevel específico de formateo -> ""FormatDrives"" para poder ser utilizado posteriormente desde la web."
+13125;Bloqueada;MetroArgel CCTV;Spike;Normal;Estudiar direccionamiento IP;Didier Convenant;"";SprintMARG_17_11;Enrique Camino Bruquetas;2017-02-20;"";50;8,0;Lunes, 20 de Febrero de 2017 16:28:50 +0100;Miércoles, 22 de Marzo de 2017 15:57:36 +0100;"";- utilizar el test tstdnsmapper y verificar que la topología es la esperada.;"Como: Equipo quiero ...
+Para: Para poder extraer de ella la topología del tren.
+
+NOTA: Modificar adecuadamente el fichero libid.conf que en cada proyecto es un componente IB llamado XXconfig."
+13122;Bloqueada;MetroArgel CCTV;User Story;Normal;[A+R] Poder descargar Audio / Video;Didier Convenant;"";SprintMARG_17_11;Enrique Camino Bruquetas;2017-02-17;2017-02-23;20;8,0;Martes, 14 de Febrero de 2017 11:37:26 +0100;Martes, 21 de Marzo de 2017 09:33:51 +0100;"";"- svn add.
+- svn commit.
+- svn tag
+";"Como: Usuario quiero ...
+Para: Poder reproducir lo grabado en un PC.
+
+NOTA: Simplemente tener escuchando un servidor ftp ""proftpd"" con la rutas hacía el disco duro.
+NOTA 2: Directamente el fichero de configuración sería:
+ 
+RequireValidShell off
+DefaultRoot /mnt/uhd    ftpvmt
+ExtendedLog /tmp/fifo/proftpd.log AUTH,INFO default
+
+MaxInstances            19
+MaxClientsPerHost      9
+
+<Directory /mnt/uhd/*>
+  DirFakeMode    0444
+  <Limit WRITE>
+    DenyAll
+  </Limit>
+</Directory>
+
+
+"
+13120;Bloqueada;MetroArgel CCTV;User Story;Normal;[A+R] Grabar cámaras del sistema.;Didier Convenant;"";SprintMARG_17_11;Enrique Camino Bruquetas;2017-02-15;2017-02-20;50;16,0;Viernes, 03 de Febrero de 2017 10:22:07 +0100;Martes, 21 de Marzo de 2017 09:34:29 +0100;"";"- Update story
+- svn commit.
+- Update configuration changelog .
+- Update story with IP version. ";"Como: Equipo quiero ...
+Para: Poder almacenar imágenes del tren.
+
+NOTA: Esta tarea es la primera actuación necesaria para lo que sería un funcionamiento total posterior.
+NOTA 2: El sistema necesita conocer los nombres DNS de las cámaras para poder conectarse a ellas.
+NOTA 3: Hay que cambiar el campo ""cam"" y el campo ""name"" del fichero recorder.conf para que sean las direcciones del proyecto.
+NOTA 4: Disponemos de una cámara del proyecto, conectarla al ""banco""
+NOTA 5: Ver documento adjunto para los nombres DNS.
+NOTA 6: Ver imagen adjunta para entender la topología.
+NOTA 7: Nombres de las grabaciones conforme a la documentación actual.
+NOTA 8: Decidir si se trabajará con ONVIF, en ese caso indicar que perfil grabar. En caso contrario configurar la url (sdp) de recepción de stream."
+13119;Bloqueada;MetroArgel CCTV;User Story;Normal;[A+R] Arranque del equipo consistente;Gonzalo Rodriguez;"";SprintMARG_17_11;Oscar Herranz;"";"";90;8,0;Martes, 10 de Enero de 2017 16:05:21 +0100;Miércoles, 15 de Marzo de 2017 15:20:06 +0100;"";"* Update story
+* svn commit.
+* Tag component.
+* Update build.conf with new IP.
+* Update story with IP version.
+* Update board changelog file
+* Send IP CMPSW release e-mail";"Como: Usuario
+Quiero: Que el equipo arranque lanzando todos los procesos necesarios
+
+*NOTAS*
+* Revisar last.conf y comprobar que el arranque es consistente y que se pasa correctamente de PreInit a InitXXX a RunAsMaster
+* Revisar rc.sepsa y comprobar que todo lo que se lanza es correcto
+* Modificar el mensaje de bienvenida identificando el sistema
+** http://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something
+* Comprobar rc.d y añadir o eliminar servicios adecuados.
+
+* Generalmente no habrá que modificar mucho el rc.sepsa existente, pero hay que revisarlo."
+13118;Bloqueada;MetroArgel CCTV;User Story;Normal;[A+R]Tener un par de claves publica/privada;Oscar Herranz;"";SprintMARG_17_11;Oscar Herranz;2017-02-17;2017-03-21;70;8,0;Martes, 10 de Enero de 2017 15:58:59 +0100;Viernes, 24 de Marzo de 2017 12:49:56 +0100;"";"* Update story
+* svn commit.
+* Tag component.
+* Update build.conf with new IP.
+* Update story with IP version.
+* Update board changelog file
+* Send IP CMPSW release e-mail";"As: User
+To: Crear y Añadir las claves necesarias para firmar y crifrar los videos.
+
+Description:
+
+* Create two keys (private and public) to sign and encrypt videos.
+* See the attached document log_commands_openssl and follow the procedure.
+* The encryption public key will be read from the configuration pool (/pXXXX/boards/XXXX/etc/encryption_public_key.conf) rather than being hardcoded. That means once the public key is generated, it will be copied to a file in this path."
+13117;Bloqueada;MetroArgel CCTV;User Story;Normal;[A+R]Firmar y cifrar los vídeos;Oscar Herranz;"";SprintMARG_17_11;Oscar Herranz;2017-02-17;2017-03-21;70;8,0;Martes, 10 de Enero de 2017 15:46:25 +0100;Viernes, 24 de Marzo de 2017 12:50:16 +0100;"";"* Update story
+* svn commit.
+* Tag component.
+* Update build.conf with new IP.
+* Update story with IP version.
+* Update board changelog file
+* Send IP CMPSW release e-mail";"As: User
+To: Firmar y crifrar los vídeos segun la especificación del proyecto
+
+Description:
+
+* As the SFD document states, the DVR must be able to sign and encrypt videos to prevent recordings from being manipulated.
+* There is an easy way to configure both actions. Within the file called _/pXXXX/boards/XXXXX/etch/harddrive.ini_ ,modify the section _POSTRECORD_ to meet the requirements.
+
+Note 1: One way to check the success of this User Story is to download video files from the recorder and use the script called nvr_get_video.sh to successfully decipher and remove signature from them."
+13116;Bloqueada;MetroArgel CCTV;User Story;Normal;[A + R] Configurar los flujos de las cámaras;Jose Fernandez;"";SprintMARG_17_11;Oscar Herranz;2017-03-17;2017-03-21;70;12,0;Martes, 10 de Enero de 2017 15:17:00 +0100;Martes, 21 de Marzo de 2017 10:29:01 +0100;"";"	* Update story
+* svn commit.
+* Tag component.
+* Update build.conf with new IP.
+* Update story with IP version.
+* Update board changelog file
+* Send IP CMPSW release e-mail";"As: User
+To: Configurar los flujos de las cámaras segun la especificación de proyecto
+
+Description:
+* Use the following parameters to configure cameras:
+
+*A DEFINIR SEGUN PROYECTO*
+
+|_.Camera Name       |_.Spatial Resolution  |_.FPS&GOP   |_.Video encoder  |_.Method of sending messages  |_.Max Bitrate (kbps)  |_.Bitrate mode |
+|=. XXX to ZZZ   |=.  XXXX          |=. XX       |=. XXX          |=. XXX                    |=.    XXX            |=. XXXX    |
+
+The name of cameras will be defined in a more advanced phase of the project.
+
+* This configuration must be written to files _recorder.conf_ and _mediasettings.ini_. 
+* An only video profile must be used, for instance VIDEOPROFILE1. *Remember!!* If anyone wants to render video through the CCTV's webpage, two profiles per camera must be added to the _mediasettings.ini_ file.
+"
+13115;Bloqueada;MetroArgel CCTV;User Story;Normal;[A] Sincronización horaria del equipo;Oscar Herranz;"";SprintMARG_17_11;Oscar Herranz;2017-03-21;2017-03-21;80;4,0;Martes, 10 de Enero de 2017 15:08:16 +0100;Viernes, 24 de Marzo de 2017 12:50:42 +0100;"";"* Update story
+* svn commit.
+* Tag component.
+* Update build.conf with new IP.
+* Update story with IP version.
+* Update board changelog file
+* Send IP CMPSW release e-mail";"Como: Usuario
+Quiero: Que el equipo se ponga en hora segun las fuentes especificadas en el proyecto
+
+*NOTAS*
+
+* Es necesario modificar el archivo timeupdaterUDP.conf para configurar las posibles fuentes de hora del sistema.
+* Las posibles fuentes de hora son:
+* SHVAR: Una variable compartida establecida por el SIV puede ser una fuente de hora. El binario settimefromshvar se usa en este caso.
+* GPS: GPS can also be used as a source, using settimefromgps.
+* RTC: esta es la fuente interna, que normalmente se pone la última en la lista del timeupdaterUDP.conf
+
+"
+13110;Bloqueada;MetroArgel CCTV;User Story;Normal;[A + R] Utilizar la llave de la bahía de HD;Luis Sanchez;"";SprintMARG_17_11;Enrique Camino Bruquetas;2017-02-06;"";90;8,0;Lunes, 06 de Febrero de 2017 11:51:25 +0100;Martes, 21 de Marzo de 2017 12:51:45 +0100;"";"- update story.
+- svn commit.
+- if necessary tag component.
+- update build.conf with new IP.
+- update story with IP version.
+- update board changelog file.
+- send IP CMPSW release e-mail.";"Como: Usuario quiero ...
+Para: No dañar los discos.
+
+NOTA: La bahía dispondrá de una llave que en posición candado abierto permitirá la extracción previo desmontaje de los discos. Desmontará los discos ordenadamente indicando dicha actuación en el led de extracción que pasara a color Verde.
+NOTA 2: También procederá de la forma contraría y en posición candado cerrado y montará los discos ordenadamente indicando dicha actuación en el led de extracción que pasara de color Verde a Rojo.
+
+NOTA 3: Se debe lanzar el ""keymanager"" para esta funcionalidad.
+NOTA 4: Una extracción + inserción + giro de llave a candado cerrado debe reiniciar el equipo.
+
+
+
+
+ "
+13109;Bloqueada;MetroArgel CCTV;User Story;Normal;[A+R] Tener un diagnóstico descargable;Gonzalo Rodriguez;"";SprintMARG_17_11;Enrique Camino Bruquetas;2017-02-02;"";90;8,0;Jueves, 02 de Febrero de 2017 13:11:54 +0100;Miércoles, 15 de Marzo de 2017 15:23:13 +0100;"";"- Update story
+- svn commit.
+- Update build.conf with new IP.
+- Update story with IP version.
+";"Como: usuario quiero ...
+Para: Poder analizar logs, tcpdums, grabaciones ... y cualquier información que sea relevante sin tener que dar ninguna instrucción al personal del SAT.
+
+NOTA: Incluir y configurar adecuadamente el componente ""systemdiagnostics"" para un adecuado diagnostico.
+NOTA 2: Integrar la funcionalidad en la página web."
+13108;Bloqueada;MetroArgel CCTV;User Story;Normal;[A+R] Reportar versiones SW del NVR;Jose Fernandez;"";SprintMARG_17_11;Enrique Camino Bruquetas;2017-03-21;2017-03-21;50;8,0;Lunes, 06 de Febrero de 2017 16:03:44 +0100;Martes, 21 de Marzo de 2017 11:16:59 +0100;"";"- update story.
+- svn commit.
+- if necessary:
+- tag component.
+- update build.conf with new IP.
+- update story with IP version.
+- update board changelog file.
+- send IP CMPSW release e-mail.";"Como: usuario quiero ...
+Para: Poder mostrar las versiones en cualquier periférico.
+
+NOTA: Utilizar la variable compartida VerSW ... con el componente IP:varsupply
+NOTA 2: Configurar adecuadamente el fichero sharedvar.conf para el proyecto. Probablemente funcione del tirón. 
+[VARSUPPLY]
+var_name=VerSW
+var_id=1 
+var_texp=5000 
+var_tprod=15000
+#var_addr=SIV.%s.%s.TREN
+var_addr=224.%d.0.22
+var_port=15000 
+master_id=SIV
+"
+13104;Bloqueada;MetroArgel CCTV;User Story;Normal;[A+R] Reportar estado de las cámaras;Jose Fernandez;"";SprintMARG_17_11;Enrique Camino Bruquetas;2017-03-21;"";50;8,0;Lunes, 06 de Febrero de 2017 16:03:44 +0100;Martes, 21 de Marzo de 2017 13:01:48 +0100;"";"- update story.
+- svn commit.
+- if necessary:
+- tag component.
+- update build.conf with new IP.
+- update story with IP version.
+- update board changelog file.
+- send IP CMPSW release e-mail.";"Como: usuario quiero ...
+Para: Poder mostrar el estado en cualquier periférico.
+
+NOTA: Utilizar la variable compartida ""CamStat"".
+NOTA 3: Reportaremos el estado de las cámara  desde el componente IP camsupply."
+13103;Bloqueada;MetroArgel CCTV;User Story;Normal;[A+R] Reportar estado de NVR;Didier Convenant;"";SprintMARG_17_11;Enrique Camino Bruquetas;2017-02-27;2017-02-28;50;8,0;Lunes, 06 de Febrero de 2017 16:03:44 +0100;Miércoles, 22 de Marzo de 2017 13:06:36 +0100;"";"- update story.
+- svn commit.
+- if necessary:
+- tag component.
+- update build.conf with new IP.
+- update story with IP version.
+- update board changelog file.
+- send IP CMPSW release e-mail.";"Como: usuario quiero ...
+Para: Poder mostrar el estado en cualquier periférico.
+
+NOTA: Utilizar la variable compartida ""estado"".
+NOTA 2: Configurar adecuadamente el fichero diagsupply.conf para el proyecto. Por lo menos reportaremos:
+ - Estado funcional 
+ - Estado discos duros
+ - De la tarea #12754 el umbral de disco lleno por alarmas.
+NOTA 3: Hay que utilizar la última diagsupply
+"
+13102;Bloqueada;MetroArgel CCTV;User Story;Normal;[A+R] Configurar unidades de grabación.;Jose Fernandez;"";SprintMARG_17_11;Enrique Camino Bruquetas;2017-03-17;"";50;8,0;Lunes, 06 de Febrero de 2017 13:26:48 +0100;Viernes, 17 de Marzo de 2017 13:40:26 +0100;"";"- update story.
+- svn commit.
+- if necessary :
+- tag component.
+- update build.conf with new IP.
+- update story with IP version.
+- update board changelog file.
+- send IP CMPSW release e-mail.";"Como: Usuario quiero ..
+Para: Utulizar los discos disponibles segun las especificaciones de proyecto
+
+NOTA: Se deben configurar las unidades de grabación para que la redundancia sea la indicada en el proyecto. 
+NOTA 2: Esta configuración se realiza en el fichero harddrive.ini
+
+[SVV01.COCHE]
+num_uhds=1
+#uhd_protected_min=30
+uhd_1=UHDA
+#size_GB_uhd_1=
+#size_GB_uhd_2=
+
+[UHDA]
+num_hds=2
+
+videopath_1=/mnt/uhd/hd01/Videos
+alarmpath_1=/mnt/uhd/hd01/Alarmas
+protectpath_1=/mnt/uhd/hd01/Protected
+datamountpoint_1=/mnt/uhd/hd01
+dev_1=/dev/satadrive1_1
+
+videopath_2=/mnt/uhd/hd02/Videos
+alarmpath_2=/mnt/uhd/hd02/Alarmas
+protectpath_2=/mnt/uhd/hd02/Protected
+datamountpoint_2=/mnt/uhd/hd02
+dev_2=/dev/satadrive2_1
+"
+13100;Bloqueada;MetroArgel CCTV;User Story;Normal;[A+R] Grabación condicional de las cámaras;Jose Fernandez;"";SprintMARG_17_11;Enrique Camino Bruquetas;2017-03-21;"";50;4,0;Lunes, 06 de Febrero de 2017 11:34:21 +0100;Martes, 21 de Marzo de 2017 17:00:02 +0100;"";"- update story.
+- svn commit.
+- if necessary tag component.
+- update build.conf with new IP.
+- update story with IP version.
+- update board changelog file.
+- send IP CMPSW release e-mail.";"Como: Usuario quiero ...
+Para: Ahorrar disco duro.
+
+NOTA: El SIV comandará, como siempre, el momento de la grabación de determinadas camaras
+NOTA 2: Se utilizará la variable compartida StopRec.
+NOTA 3: La infraestructura para hacer esto está creada.
+
+"
+12986;Pte Validacion;GreenLine CCTV;Spike;Normal;Intergrar NVR con VMT;Luis Sanchez;"";SprintGL_17_11;Enrique Camino Bruquetas;2017-02-14;"";100;8,0;Martes, 14 de Febrero de 2017 11:52:01 +0100;Martes, 21 de Marzo de 2017 11:06:27 +0100;"";"- Probar el VMT del proyecto contra el DMRI:
+* Visualizar vídeos grabados.
+* Descargar Vídeos grabados.
+* Audio. ";"Como: Equipo quiero ..
+Para: Probar que el interfaz con el VMT es el esperado.
+
+NOTA: La validación debe hacerla el equipo de PC, pero daremos todo el soporte que se necesite.
+WARNING: Esta debe ser la última tarea de las relacionadas."
+12984;En progreso;PRODUCTO;Spike;Normal;Actualizar SSD SVV5GA;Jose Fernandez;"";SprintPROD_17_11;Enrique Camino Bruquetas;2017-03-24;"";0;24,0;Martes, 28 de Febrero de 2017 14:08:09 +0100;Viernes, 24 de Marzo de 2017 13:13:08 +0100;"";- Revisión por par.;"Como: usuario quiero ...
+
+NOTA: La SSD que hay se hizo para MNR, partiendo de ésta actualizarla"
+12957;Pte Validacion;CIVIA - CCTV;User Story;Normal;Verificar que tenemos el código fuente de la aplicacion SVCT (Trenecito);Didier Convenant;"";SprintCIVIA_17_11;Didier Convenant;2017-02-27;"";100;4,0;Lunes, 27 de Febrero de 2017 13:28:21 +0100;Jueves, 16 de Marzo de 2017 14:07:55 +0100;"";"* update story
+
+";"Como: Equipo quiero ....
+Para: Estar seguro que tenemos el código fuente de la aplicación SVCT en la jaula antigua que hemos recuperado.
+
+NOTA: Solo se puede hace de manera subjetiva mirando el código fuente."
+12929;Nueva;CIVIA - CCTV;User Story;Normal;Subir a SVN todo el trabajo hecho para la aplicación SVCT (Trenicito);"";"";SprintCIVIA_17_11;Didier Convenant;2017-02-23;"";0;16,0;Jueves, 23 de Febrero de 2017 14:56:46 +0100;Viernes, 10 de Marzo de 2017 17:16:45 +0100;"";"* update story.
+* svn commit.
+* tag component.
+* update build.conf with new IP.
+* update story with IP version.
+* update board changelog file.
+* send IP CMPSW release e-mail.";"Como: Equipo quiero ....
+Para: Poder bajar de SVN todo lo necesario para compilar y hacer un boot disk para la aplicación SVCT (Trenicito)
+
+NOTA: Se debe subir a SVN los componentes ""IB"" o ""LO"" o ""IP"" que en la jaula antigua eran locales.
+NOTA 2: Se debe hacer una nueva tarjeta, nuevo kernel nuevo rootfs y una nueva jaula.
+NOTA 3: Se debe hacer una nueva plataforma para usar cono boot disk.
+NOTA 4: El trabajo de las NOTAS 2 y 3, se harán con ayuda del equipo de infraestructura.
+NOTA 5: Esta user story esta dependiente de las siguientes:
+#12922 ""Compilar SVCT en jaula 1A""
+#12923 ""Arrancar la aplicación SVCT (Trenicito)""
+#12924 ""Que la aplicacion SVCT (Trenicito) funcione ""
+#12925 ""Hacer un bootable disco para la aplicación SVCT (Trenicito)""
+"
+12924;En progreso;CIVIA - CCTV;User Story;Normal;Que la aplicacion  SVCT (Trenicito) funcione ;"";"";SprintCIVIA_17_11;Didier Convenant;2017-02-23;"";20;16,0;Jueves, 23 de Febrero de 2017 13:27:33 +0100;Viernes, 10 de Marzo de 2017 17:16:44 +0100;"";"* update story
+* update build.conf
+* update board changelog file ";"Como: Equipo quiero...
+Para: Poder descargar Y visualizar vídeos del equipo SVV de CIVIA desde la aplicación SVCT (Trenicito) instalada en un PC.
+
+NOTA: La aplicación a través del ident client pedirá una ip al sistema. Comprobar que el PC queda con una IP válida.
+NOTA 1: En la aplicativo SVCT tenemos que ver todos los vídeos grabados en la SVV y poder seleccionar cualquier para descargarlo.
+NOTA 2: En la aplicación SVCT tenemos que ver el vídeo en vivo de las cámaras.
+NOTA 3: Este user story esta dependiente de #12923 ""Arrancar la aplicación SVCT (Trenicito)""
+
+"
+12923;Pte Validacion;CIVIA - CCTV;User Story;Normal;Arrancar la aplicación SVCT (Trenicito);Didier Convenant;"";SprintCIVIA_17_11;Didier Convenant;2017-02-23;2017-03-15;100;16,0;Jueves, 23 de Febrero de 2017 13:08:17 +0100;Jueves, 16 de Marzo de 2017 14:06:20 +0100;"";"* Instalar los paquetes necesarios.
+* update story
+* update build.conf
+* update board changelog file ";"Como: Equipo quiero...
+Para: Poder arrancar la aplicación SVCT en un PC con Ubuntu 14.04
+
+NOTA: Queremos que se arranque la aplicacion, quiere decir que se veía la ventana gráfica y que no se muera. 
+NOTA 2: Este user story es dependiente de #12922 ""Compilar SVCT en jaula 1A""
+"
+12906;Pte Validacion;Toluca CCTV;User Story;Normal;Integración VMT;Luis Sanchez;"";SprintTOL_17_11;Gonzalo Rodriguez;2017-02-21;"";100;8,0;Martes, 21 de Febrero de 2017 15:43:12 +0100;Jueves, 23 de Marzo de 2017 16:11:56 +0100;"";"	* Update story
+* svn commit.
+* tag component.
+* Update build.conf with new IP.
+* Update story with IP version.
+* Update board changelog file
+* Send IP CMPSW release e-mail ";"As: user
+TO: Integrar VMT con el SVV en el banco y comprobar que todo funciona correctamente.
+
+
+Notes
+
+* VMT must command the change to DMRI runlevel and check that the change has in fact taken place.
+* VMT must be able to get video lists and download and reproduce it correctly.
+
+"
+12903;Pte Validacion;Toluca CCTV;User Story;Normal;Integración VMT (DMRI);Luis Sanchez;"";SprintTOL_17_11;Enrique Camino Bruquetas;2017-02-21;"";100;8,0;Martes, 21 de Febrero de 2017 15:33:51 +0100;Jueves, 23 de Marzo de 2017 13:13:47 +0100;"";"* Update story
+* svn commit.
+* tag component.
+* Update build.conf with new IP.
+* Update story with IP version.
+* Update board changelog file
+* Send IP CMPSW release e-mail ";"As: user
+TO: Integrar VMT con el DMRI y comprobar que todo funciona correctamente. 
+
+
+Notes
+* VMT must command the change to DMRI runlevel and check that the change has in fact taken place. 
+* VMT must be able to get video lists and download and reproduce it correctly."
+12895;Pte Validacion;PRODUCTO;User Story;Normal;Reducir memoria del diagnostico.;Gonzalo Rodriguez;"";SprintPROD_17_11;Enrique Camino Bruquetas;2017-02-20;"";100;24,0;Lunes, 20 de Febrero de 2017 11:44:50 +0100;Viernes, 17 de Marzo de 2017 09:07:26 +0100;"";"- Update story
+- svn commit.
+- Tag component.
+- Update build.conf with new IP.
+- Update story with IP version.
+- Update board changelog file
+- Send IP CMPSW release e-mail";"Como: Equipo quiero ....
+Para: ... cada hilo pueden ser unos 20 MB
+
+NOTA: Muchos diagnósticos reciben la información necesaria para realizar el análisis desde otros procesos, y normalmente a través de un socket de escucha. Todos estos diagnósticos implementan un hilo para escuchar lo que otros procesos tiene que comunicar y eso nos lleva a un gasto de memoria alto.
+
+NOTA 2: Queremos centralizar todos esos hilos en un único hilo de recepción de información, de tal forma que ahorraremos unos 20 MB por hilo de recepción.
+NOTA 3: Modificar Diagnostico2 a tal efecto."
+12852;Nueva;GreenLine CCTV;Spike;Normal;Intergrar DMRI con VMT;"";"";SprintGL_17_11;Enrique Camino Bruquetas;2017-02-14;"";0;8,0;Martes, 14 de Febrero de 2017 11:52:01 +0100;Viernes, 10 de Marzo de 2017 16:49:41 +0100;"";"- Probar el VMT del proyecto contra el DMRI:
+* Visualizar vídeos grabados.
+* Descargar Vídeos grabados.
+* Audio. ";"Como: Equipo quiero ..
+Para: Probar que el interfaz con el VMT es el esperado.
+
+NOTA: La validación debe hacerla el equipo de PC, pero daremos todo el soporte que se necesite.
+WARNING: Esta debe ser la última tarea de las relacionadas."
+12845;Pte Validacion;PRODUCTO;Spike;Normal;Define a method to validate new cameras;Oscar Herranz;"";SprintPROD_17_11;Oscar Herranz;2017-03-09;2017-03-14;100;16,0;Lunes, 13 de Febrero de 2017 15:00:24 +0100;Martes, 14 de Marzo de 2017 14:03:22 +0100;"";"- Write conclusions
+- Maybe create a guide or step-by-step tutorial as part of the CCTV know-how";"As: CCTV Team
+To: Define a method to validate new cameras in SEPSA
+
+* The idea is to develop a method of validating a new camera model from the beginning. Several issues should be taken into account, for instance:
+** The camera ask for an IP address by sending a DHCP_DISCOVER message.
+** The environment in terms of networking must be set. (A possible scheme may be a laptop, the own camera, a switch and a DHCP server.
+** Use a network analyser like _Wireshark_ to read the DHCP_REQUEST message and know the IP just offered.
+** Know the common actions to take in cameras (find their urls to connect to, enable/disable options (e.g. RTSP authentication, bitrate mode, fps rate, quantization percentage, etc).
+** Install cameras into our video-surveillance system and check if either they are detected or configured appropriately.
+** Make a _troubleshooting_ case and explain small and important details in order to resolve well-known problems.
+"
+12393;Bloqueada;PRODUCTO;Spike;Normal;Valorar no depender del SIV en S.I;Jose Fernandez;"";SprintPROD_17_11;Enrique Camino Bruquetas;2017-03-14;"";80;24,0;Jueves, 01 de Diciembre de 2016 16:24:54 +0100;Jueves, 23 de Marzo de 2017 11:32:34 +0100;"";- Crear una historia de usuario por cada NOTA.;"Como: Grupo quiero
+Para: No depender del SIV en los desarrollos. 
+
+NOTA: Las tareas relacionadas serían a groso modo:
+
+0) PC con linux
+
+1) Asignar ip a los distintos componentes que conectemos a través de un switch comercial (DHCP server)
+
+2) Asignar nombres DNS a los distintos componentes que conectemos a través de un switch comercial (DNS server)
+
+3) Valorar si utilizamos el UAMDSI para simular las cámaras o un servidor de streaming como  el que suministra la live555 -> li3e555MediaServer o testH264VideoStreamer. Esto sería lo preferible porque nos quitamos la utilización de un ordenador con windows.
+- Otra opción a valorar sería poner una cámara que soportara muchos flujos simultáneos y así poder utilizar el protocolo ONVIF.
+- La empresa happy time soft que ya suministro la librería ONVIF dispone de simuladores ONVIF que también deberán ser valorados para simular la parte de ONVIF. Se ha hecho una pequeña prueba rápida con el binario que se baja de su página y funciona bastante bien para nuestros propositos -> http://www.happytimesoft.com/products/onvif-server/index.html Esta opción + el servidor RTSP de la live555 parece la opción ganadora.
+
+4) Enviar con los simuladores que tenemos las variables compartidas que necesitamos:
+[HANDHOLD]
+var_name=Eventos
+var_id=16
+var_tcadu=4000
+var_addr=230.0.0.30
+var_port=22002
+master_id=SIV
+
+[STOPREC]
+var_name=NoGrabCamaras
+var_id=57
+var_tcadu=4000
+var_addr=230.0.0.30
+var_port=22003
+master_id=SIV
+dominio=stopdom
+
+[GRABACIONAUDIO]
+var_name=GrabAudio
+var_id=56
+var_tcadu=4000
+var_addr=230.0.0.30
+var_port=22001
+master_id=SIV
+
+[INFOSIV]
+var_name=Estado_si
+var_id=10
+var_texp=4000
+var_addr=230.0.0.30
+var_port=16002
+master_id=SIV
+
+[TIMEUPDATER]
+var_name=Info_Sinc
+var_id=30
+var_tcadu=30000
+var_addr=225.%d.0.20
+var_port=16004
+master_vcid=1
+
+5) Poder probar con los simuladores que tenemos los mensajes esporádicos que recibimos del SIV ... sobre todo HDOFF y SHUTDOWN.
+
+6) Realizar programa de test para emitir audio RAW de la misma forma que lo hace una matriz de audio sobre udp y una dirección multicast. "
