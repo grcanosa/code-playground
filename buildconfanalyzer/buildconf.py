@@ -35,7 +35,6 @@ class BuildConf:
                     if line[0] == ")":
                         break;
                     lsplit = line.split(":")
-                    module= {}
                     module = Module();
                     module.type = lsplit[0];
                     namespli = lsplit[1].split("-")
