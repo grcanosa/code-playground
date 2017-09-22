@@ -108,10 +108,10 @@ class MultiFileSelectionWidget():
     def get_widget(self):
         return self._vbox
         
-        
-#TEST
-from IPython.display import display
-pw = PathSelectWidget("my_file")
-display(pw.get_widget())
-mf = MultiFileSelectionWidget(["f1","f2"])
-display(mf.get_widget())
+if __name__ == "__main__":        
+    #TEST
+    from IPython.display import display
+    pw = PathSelectWidget("my_file")
+    display(pw.get_widget())
+    mf = MultiFileSelectionWidget(["f1","f2"])
+    display(mf.get_widget())
