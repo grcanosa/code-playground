@@ -1,3 +1,8 @@
+'''
+@author grcanosa
+        http://github.com/grcanosa
+A Path Selection widget for jupyter notebooks.        
+'''
 import os
 import ipywidgets as widgets
 
