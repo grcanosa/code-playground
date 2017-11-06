@@ -1,0 +1,15 @@
+<h1>Book Upload</h1>
+<form method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    {{ form.book }}
+    {% for error in form.book.errors %}
+        <span style="color: red;">{{ error }}</span>
+    {% endfor %}
+    {{ form.submit }}
+</form>
+
+{% if file_url %}
+<br>
+<p>Uploaded file {{ file_url }}</p>
+<p>Uploaded filename {{ file_path }}</p>
+{% endif %}

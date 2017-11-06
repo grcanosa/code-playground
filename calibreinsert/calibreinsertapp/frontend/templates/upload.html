@@ -1,0 +1,25 @@
+<h1>Book Upload</h1>
+<form method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    {{ form.book }}
+    {% for error in form.book.errors %}
+        <span style="color: red;">{{ error }}</span>
+    {% endfor %}
+    {{ form.submit }}
+</form>
+
+{% if file_url %}
+<br>
+<p>Uploaded filename {{ file_path }}</p>
+<form method="POST" enctype="multipart/form-data">
+    {{ bookform.hidden_tag() }}
+    {% for field in bookform if field.widget.input_type != 'hidden' %}
+    <tr>
+        <td>{{ field.label }}</td>
+        <td>{{ field }}</td><br><br>
+    </tr>
+    {% endfor %}
+    {{ bookform.submit }}
+</form>
+
+{% endif %}
