@@ -1,0 +1,1 @@
+var PIECE_SIZE = 50

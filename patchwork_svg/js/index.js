@@ -11,5 +11,6 @@ pieceinfo = {
 
 }
 
+var pieces = Papa.parse("pieces.csv")
 
 svg_container.piece(pieceinfo)

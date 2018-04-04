@@ -18,7 +18,7 @@ SVG.Piece = SVG.invent({
         for(i=0; i< info.points.length; i++)
         {
             point = info.points[i]
-            this._pieces.push(this.rect(PIECE_SIZE,PIECE_SIZE).fill("white").stroke("black").x(point.x*50).y(point.y*50))
+            this._pieces.push(this.rect(PIECE_SIZE,PIECE_SIZE).fill("white").stroke("black").x(point.x*PIECE_SIZE).y(point.y*PIECE_SIZE))
         }
 
         return this
