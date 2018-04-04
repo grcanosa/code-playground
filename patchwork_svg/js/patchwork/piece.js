@@ -5,8 +5,7 @@ SVG.Piece = SVG.invent({
 
         this.style('overflow', 'visible')
         //this.circle(5).fill("red").cx(0).cy(0)
-        this.size(1000,1000)
-
+        this.size(10,10)
     }
 
 //Inherit from
@@ -14,12 +13,12 @@ SVG.Piece = SVG.invent({
 
 , extend: {
     _build: function(info) {
-
+        this._pieces = []
         
         for(i=0; i< info.points.length; i++)
         {
             point = info.points[i]
-            this.circle(50).fill("red").cx(point.x*50).cy(point.y*50)
+            this._pieces.push(this.rect(PIECE_SIZE,PIECE_SIZE).fill("white").stroke("black").x(point.x*50).y(point.y*50))
         }
 
         return this
